@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -24,19 +25,20 @@ public class RegisterCompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<RegisterCompanyResponse> registerCompany(@RequestBody RegisterCompanyCommand command) {
-        command.setId(UUID.randomUUID().toString());
+    public ResponseEntity<RegisterCompanyResponse> registerCompany(@Valid @RequestBody RegisterCompanyCommand command) {
+        var id = UUID.randomUUID().toString();
+        command.setId(id);
         try{
 
             commandGateway.send(command);
 
-            return new ResponseEntity<>(new RegisterCompanyResponse("Company successfully registered"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new RegisterCompanyResponse(id,"Company successfully registered"), HttpStatus.CREATED);
 
         } catch (Exception e) {
-            var safeErrorMessage = "Error while processing register company request for id - " + command.getId();
+            var safeErrorMessage = "Error while processing register company request for id - " + id;
             System.out.println(e.toString());
 
-            return new ResponseEntity<>(new RegisterCompanyResponse(safeErrorMessage), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new RegisterCompanyResponse(id, safeErrorMessage), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

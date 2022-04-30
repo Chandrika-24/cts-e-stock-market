@@ -13,6 +13,7 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Aggregate
@@ -26,7 +27,7 @@ public class CompanyAggregate {
     }
 
     @CommandHandler
-    public CompanyAggregate(RegisterCompanyCommand command) {
+    public CompanyAggregate(@Valid RegisterCompanyCommand command) {
         var newCompany = command.getCompany();
         newCompany.setId(command.getId());
         var event = CompanyRegisteredEvent.builder()
@@ -37,7 +38,7 @@ public class CompanyAggregate {
     }
 
     @CommandHandler
-    public CompanyAggregate(UpdateCompanyCommand command) {
+    public void handle(UpdateCompanyCommand command) {
         var updatedCompany = command.getCompany();
         updatedCompany.setId(command.getId());
         var event = CompanyUpdatedEvent.builder()
@@ -48,7 +49,7 @@ public class CompanyAggregate {
     }
 
     @CommandHandler
-    public CompanyAggregate(RemoveCompanyCommand command) {
+    public void handle(RemoveCompanyCommand command) {
         var event = new CompanyRemovedEvent();
         event.setId(command.getId());
         AggregateLifecycle.apply(event);
@@ -62,6 +63,7 @@ public class CompanyAggregate {
 
     @EventSourcingHandler
     public void on(CompanyUpdatedEvent event) {
+
         this.company = event.getCompany();
     }
 

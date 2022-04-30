@@ -22,12 +22,14 @@ public class CompanyEventHandlerImpl implements CompanyEventHandler{
     @EventHandler
     @Override
     public void on(CompanyRegisteredEvent event) {
+
         companyRepository.save(event.getCompany());
     }
 
     @EventHandler
     @Override
     public void on(CompanyUpdatedEvent event) {
+
         companyRepository.save(event.getCompany());
     }
 

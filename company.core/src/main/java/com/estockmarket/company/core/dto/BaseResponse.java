@@ -1,4 +1,4 @@
-package com.estockmarket.company.cmd.api.dto;
+package com.estockmarket.company.core.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
