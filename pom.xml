@@ -13,6 +13,7 @@
         <module>company.core</module>
         <module>company.cmd.api</module>
         <module>company.query.api</module>
+        <module>user.oauth2.0</module>
     </modules>
 
     <properties>
