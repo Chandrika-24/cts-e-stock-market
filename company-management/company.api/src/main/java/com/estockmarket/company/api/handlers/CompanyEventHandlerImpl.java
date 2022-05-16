@@ -3,7 +3,6 @@ package com.estockmarket.company.api.handlers;
 import com.estockmarket.company.core.events.CompanyRegisteredEvent;
 import com.estockmarket.company.core.events.CompanyRemovedEvent;
 import com.estockmarket.company.core.events.CompanyUpdatedEvent;
-import com.estockmarket.company.api.handlers.CompanyEventHandler;
 import com.estockmarket.company.api.repositories.CompanyRepository;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
@@ -39,4 +38,5 @@ public class CompanyEventHandlerImpl implements CompanyEventHandler {
     public void on(CompanyRemovedEvent event) {
         companyRepository.deleteByCompanycode(event.getCompanycode());
     }
+
 }

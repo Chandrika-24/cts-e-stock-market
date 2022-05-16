@@ -40,7 +40,7 @@ public class Company {
     private String companywebsite;
     @NotEmpty(message = "Company stock exchange is required")
     private List<String> stockexchange;
-
+    private Stock stock;
     public Company(Company byCompanycode) {
     }
 }

@@ -12,6 +12,7 @@
     <modules>
         <module>company.core</module>
         <module>company.api</module>
+        <module>stock.api</module>
     </modules>
 
     <properties>
