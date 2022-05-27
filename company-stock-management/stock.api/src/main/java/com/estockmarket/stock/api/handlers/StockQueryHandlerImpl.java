@@ -3,6 +3,7 @@ package com.estockmarket.stock.api.handlers;
 import com.estockmarket.stock.api.dto.StockLookupResponse;
 import com.estockmarket.company.core.models.Stock;
 import com.estockmarket.stock.api.queries.GetAllStocksByCompanyCodeQuery;
+import com.estockmarket.stock.api.queries.GetAllStocksByFilterQuery;
 import com.estockmarket.stock.api.repositories.StockRepository;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,12 @@ public class StockQueryHandlerImpl implements StockQueryHandler{
         var stocks = stockRepository.findAllByCompanycode(query.getCompanycode());
         return new StockLookupResponse(stocks);
     }
+
+    @QueryHandler
+    @Override
+    public StockLookupResponse on(GetAllStocksByFilterQuery query) {
+        var stocks = stockRepository.findByEnteredCompanyAndBetweenDates(query.getCompanycode(), query.getStartDate(), query.getEndDate());
+        return new StockLookupResponse(stocks);
+    }
+
 }
